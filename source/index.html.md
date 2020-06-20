@@ -8,8 +8,8 @@ toc_footers:
   - <a href='https://github.com/Minecraft-Meteor'>GitHub</a>
   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
-includes:
-  - errors
+#includes:
+#  - errors
 
 search: true
 ---
