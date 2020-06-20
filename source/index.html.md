@@ -1,14 +1,11 @@
 ---
-title: API Reference
+title: Minecraft Meteor
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
-  - python
-  - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
+  - <a href='https://github.com/Minecraft-Meteor'>GitHub</a>
   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -17,223 +14,42 @@ includes:
 search: true
 ---
 
-# Introduction
+# Bienvenue sur la documentation Meteor
+  Meteor est un projet d'unification monétaire Minecraftienne sous une cryptomonnaie unique nommée **Meteor** (oui, le logo ressemble à un cookie, mais c'est un astéroïde).
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+## Principe de la monnaie
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Il s'agit d'une cryptomonnaie *Proof-of-Stake* et non Proof-of-Work, soft-forkée de NXT, ce qui signifie qu'elle ne consomme pas beaucoup de ressources puisqu'au lieu de donner le bloc à résoudre à tous les mineurs (appelés forgeurs dans le cas d'une monnaie PoS), il en sélectionne un au hasard (pondéré avec la solde de Meteor qu'il possède) pour le résoudre, ce bloc peut être ensuite validé par tous les forgeurs (ce qui est bien plus rapide que de le résoudre).
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+### Et Minecraft alors ?
 
-# Authentication
+Le Meteor est prévu pour être utilisable sur tous les serveurs Minecraft et, à terme, avoir une valeur réelle ce qui permettrait de les échanger contre de l'argent réel. Nous prévoyons de plafonner ce prix à 10 centimes d'Euro.
+Afin de permettre une telle chose, plusieurs serveurs doivent accepter cette monnaie virtuelle, en considérant qu'elle vaut éffectivement 10 cts d'Euro, cela lui permettra progressivement d'obtenir de la valeur.
 
-> To authorize, use this code:
+### J'ai entendu parler de SpaceLauncher, kesaco ?
 
-```ruby
-require 'kittn'
+Le SpaceLauncher sera un launcher contenant un mod qui permettra au joueur de forger de façon transparente pour lui et d'en donner les bénéfices au serveur qu'il visite, si celui-ci adhère au réseau Meteor, sinon, le bénéfice sera envoyé sur un compte appartenant au réseau puis sera redistribué aux serveurs, il permetra également de multiplier les gains de Meteor du joueur selon un coeficient calculé selon sa participation au réseau. Le coeficient est un nombre compris entre 1 et 2, il est calculé de la façon suivante : 
+``` (Nombre de blocs calculés par le joueurs durant le dernier mois / (Nombre de blocs calculés par le réseau entier durant le dernier mois / 2)) + 1```
+Cette formule pourras être améliorée au fûr et à mesure.
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+**Le mod et le launcher SpaceLauncher ne sont pas encore développés. Ils arriveront dans un futur proche. Suivez le développement sur la page Github du projet.**
+**Les noms ne sont par ailleurs pas définitifs et peuvent être amenés à changer au cours du développement**
 
-```python
-import kittn
+## Je veux utiliser Meteor sur mon serveur, comment faire ?
 
-api = kittn.authorize('meowmeowmeow')
-```
+Afin de pouvoir utiliser le Meteor sur votre serveur, l'utilisant comme seule monnaie utilisable en jeu et sur votre boutique web, vous devrez mettre en place au minimum deux systèmes :
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+ - Un moyen de convertir les euros en Meteor (autrement dit, permettre d'acheter des Meteors, en sens unique pour l'instant)
+ - Un système multipliant les gains de Meteor aux joueurs sous SpaceLauncher (voir ci-dessous) par le coeficient de ce joueur
+ 
+À ces fins devra également et surtout être mis en place une connection avec notre système de lien pseudo/compte Meteor, ce qui interdit les serveurs cracks pour le moment, exception faite de ceux ayant leurs propre serveur d'authentification. Nous contacter dans ces cas particulier.
 
-```javascript
-const kittn = require('kittn');
+Votre serveur devra également utiliser son compte Meteor pour forger afin de promouvoir la décentralisation du réseau, il devra donc héberger un Node Meteor, ce Node sera ajouté à la Known-Node List ce qui signifie qu'il sera un acteur important du réseau.
 
-let api = kittn.authorize('meowmeowmeow');
-```
+Une fois le serveur rendu compatible avec Meteor, vous pourrez nous contacter et nous vous donnerons quelques Meteors à distribuer au joueurs selon vos désirs (dans la limite du raisonnable), en général nous donnons un million de Meteors renouvellable si besoin est.
 
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
+#### Cas spécial : Mon serveur utilise deux monnaies
+Eventuellement pourra être conservé votre monnaie actuelle si vous utilisez une monnaie déjà présente. 
+Beaucoup de serveurs ont actuellement deux monnaies, l'une est généralement appelée "Points Boutique" et l'autre peut avoir differents nom et n'est utilisable qu'en jeu (nous l'appelerons ici "MineDollar" ou M$). 
+Dans le cadre de ces serveurs, le Meteor remplacera le Point Boutique, il devra cependant être mis en place un système permettant la convertion à un taux fixe des M$ en Meteor (et inversement) afin de respecter les EULAs de Mojang et le fait que les Meteors se gagnent en jouant.
+Dans ce cas, le système doublant les gains de Meteor aux joueurs sous SpaceLauncher pourra se présenter sous deux formes : une multiplication des gains de M$ ou bien une division du taux d'échange M$ -> Meteor par le coeficient soustrait de 1 point. `Taux d'échange réduit = Taux classique / (Coeficient - 1)` 
